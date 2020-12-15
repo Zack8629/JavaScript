@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание 2</title>
+</head>
+
+<body>
+    <script>
+        'use strict'
+
+        // 2.Продолжить работу с интернет - магазином:
+        // 2.1.В прошлом домашнем задании вы реализовали корзину на базе массивов.
+        // Какими объектами можно заменить их элементы ?
+        // 2.2.Реализуйте такие объекты.
+        // 2.3.Перенести функционал подсчета корзины на объектно - ориентированную базу.
+
+
+        const Basket = {
+            goods: [
+                {
+                    id_product: 123,
+                    product_name: "Ноутбук",
+                    price: 25751,
+                    quantity: 2
+                }, {
+                    id_product: 456,
+                    product_name: "Мышка",
+                    price: 525,
+                    quantity: 2
+                }, {
+                    id_product: 789,
+                    product_name: "SSD",
+                    price: 1001,
+                    quantity: 3
+                }
+            ],
+
+            countBasketPrice() {
+                return this.goods.reduce((totalPrice, currtItem) => totalPrice += currtItem.price * currtItem.quantity, 0);
+            }
+        };
+
+
+        console.log(`Итоговвая стоимость корзины = ${Basket.countBasketPrice()}`);
+
+    </script>
+</body>
+
+</html>
