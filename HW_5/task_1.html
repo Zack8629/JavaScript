@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание 1 - Шахматы</title>
+
+    <style>
+        table {
+            margin: auto;
+            border-collapse: collapse;
+        }
+
+        tr {
+            width: 50px;
+            height: 50px;
+        }
+
+        td {
+            border: 1px solid #000000;
+            width: 50px;
+            height: 50px;
+            background-color: #dddddd;
+            text-align: center;
+            font-size: 2em;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="ChessBoard"></table>
+
+    <script>
+
+        // 1. Создать функцию, генерирующую шахматную доску.
+        // При этом можно использовать любые html - теги по своему желанию.
+        // Доска должна быть разлинована соответствующим образом,
+        // т.е.чередовать черные и белые ячейки.Строки должны нумероваться
+        // числами от 1 до 8, столбцы – латинскими буквами A, B, C, D, E, F, G, H.
+
+        'use strict'
+
+
+        const chess = {
+            chessBoard: document.getElementById('ChessBoard'),
+
+
+            generateChessboard() {
+                const stringName = [0, '8', '7', '6', '5', '4', '3', '2', '1', 0];
+                const columnName = [0, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 0];
+
+                for (let str = 0; str < stringName.length; str++) {
+                    const tr = document.createElement('tr');
+                    this.chessBoard.appendChild(tr);
+
+                    for (let col = 0; col < columnName.length; col++) {
+                        const td = document.createElement('td');
+                        tr.appendChild(td);
+
+                        if (stringName[str] === 0 && columnName[col] !== 0) {
+                            td.innerHTML = columnName[col];
+                        } else if (columnName[col] === 0 && stringName[str] !== 0) {
+                            td.innerHTML = stringName[str].toString();
+                        }
+
+                        if (this.paintCage(str, col)) {
+                            td.style.backgroundColor = "black";
+                        }
+                    }
+                }
+            },
+
+
+            paintCage(strNum, colNum) {
+                if (strNum === 0 || colNum === 0 || strNum === 9 || colNum === 9) {
+                    return false;
+                }
+
+                return (strNum % 2 === 1 && colNum % 2 === 0) || (strNum % 2 === 0 && colNum % 2 === 1);
+            },
+        };
+
+
+        chess.generateChessboard();
+    </script>
+</body>
+
+</html>

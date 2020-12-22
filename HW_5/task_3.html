@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание 3 - динамическая корзина</title>
+
+    <style>
+        .productСard {
+            border: 1px solid #000;
+            margin-bottom: 5px;
+            background: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cart_list"></div>
+    <button class="clear_button">Очистить корзину</button>
+
+    <script>
+        // 3. Сделать генерацию корзины динамической: верстка корзины не должна находиться в HTML - структуре.
+        // Там должен быть только div, в который будет вставляться корзина, сгенерированная на базе JS:
+        // 3.1.Пустая корзина должна выводить строку «Корзина пуста»;
+        // 3.2.Наполненная должна выводить «В корзине: n товаров на сумму m рублей».
+
+        'use strict'
+
+
+        const cartItem = {
+            render(productСard) {
+                return `<div class="productСard">
+                            <div><b>Наименование</b>: ${productСard.product_name}</div>
+                            <div><b>Цена за шт.</b>: ${productСard.price}</div>
+                            <div><b>Количество</b>: ${productСard.quantity}</div>
+                            <div><b>Стоимость</b>: ${productСard.price * productСard.quantity}</div>
+                        </div>`;
+            }
+        }
+
+
+        const cart = {
+            cartListBlock: null,
+            cartButton: null,
+            cartItem,
+            products: [
+                {
+                    id_product: 123,
+                    product_name: 'Ноутбук',
+                    price: 53000,
+                    quantity: 1,
+                }, {
+                    id_product: 456,
+                    product_name: 'Мышка',
+                    price: 1000,
+                    quantity: 1,
+                }, {
+                    id_product: 305,
+                    product_name: 'Клавиатура',
+                    price: 500,
+                    quantity: 2,
+                },
+            ],
+
+
+            init() {
+                this.cartListBlock = document.querySelector('.cart_list');
+                this.cartButton = document.querySelector('.clear_button');
+                this.cartButton.addEventListener('click', this.clearCart.bind(this));
+
+                this.render();
+            },
+
+
+            render() {
+                if (this.products.length) {
+                    this.products.forEach(productСard => {
+                        this.cartListBlock.insertAdjacentHTML('beforeend', this.cartItem.render(productСard));
+                    });
+                    this.cartListBlock.insertAdjacentHTML('beforeend',
+                        `Количество позиций в корзине: ${this.products.length} на сумму: ${this.calculkBasket()}`);
+                } else {
+                    this.cartListBlock.textContent = 'Корзина пуста';
+                }
+            },
+
+
+            calculkBasket() {
+                return this.products.reduce(function (price, productСard) {
+                    return price + productСard.price * productСard.quantity;
+                }, 0);
+            },
+
+
+            clearCart() {
+                this.products = [];
+                this.render();
+            },
+        };
+
+
+        cart.init();
+    </script>
+</body>
+
+</html>
